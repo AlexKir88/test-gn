@@ -1,5 +1,5 @@
 const maxValue = 5;
-
+export const mapSkills = ['Нетренированный', 'Новичок', 'Ученик', 'Адепт', 'Эксперт', 'Мастер']
 
 export const heroDefault = {
     nameHero: 'Nemo',

@@ -1,13 +1,20 @@
 import { savePersonage } from "../../service/actionIndexedDB";
-import { heroDefault } from "../../service/heroFunctions";
-
-const Hero = ({personage, setPersonage, count, setCount}) => {
+import { heroDefault, mapSkills } from "../../service/heroFunctions";
+import styles from './Hero.module.scss';
+import {BsPencilFill} from 'react-icons/bs';
+const Hero = ({personage, count, setCount}) => {
+    let inpRef;
+    let nameRef;
     const refreshData = (personage) => {
-        setCount(++count);
         savePersonage(personage);
+        setCount(++count);
     }
     const killPersonage = () => {
         refreshData(heroDefault);
+    }
+    const takeDamage = () => {
+        personage.takeDamage();
+        refreshData(personage);
     }
     const changeHaract = (par, val) => {
         personage['set'+par](val) ;
@@ -18,70 +25,83 @@ const Hero = ({personage, setPersonage, count, setCount}) => {
         personage.trainSkill(e.target.name);
         refreshData(personage);
     }
-    const takeDamage = () => {
-        personage.takeDamage();
+    const callInput = (e) => {
+        nameRef.hidden = true;
+        inpRef.hidden = false;
+    }
+    const changeName = () => {
+        personage.nameHero = inpRef.value;
+        inpRef.hidden = true;
+        nameRef.hidden = false;
         refreshData(personage);
     }
-    const changeName = (e) => {
-        personage.nameHero = e.target.value;
-        refreshData(personage);
+    const pressEnter = (e) => {
+        if (!(e.code === 'Enter' || e.code === 'NumpadEnter' || e.keyCode === 13)) {
+            return
+        };
+        changeName();
     }
+
     return (
         <>  
-            <div>
-                <button onClick={killPersonage}>Обнулить персонажа</button>
+            <div className={styles.header}>
+                <div>
+                    <h2>
+                        Имя: <span ref={e => nameRef = e } onClick={callInput}>{personage?.nameHero} <BsPencilFill size={10} /> </span> 
+                        <input defaultValue={personage?.nameHero} ref={e => inpRef = e} onBlur={changeName} onKeyDown={pressEnter} hidden  type='text'/>
+                    </h2>
+                    <button onClick={takeDamage}>Получить урон</button>
+                    <button onClick={killPersonage}>Обнулить персонажа</button>
+                </div>
             </div>
-            <div>
-                <h2>Имя: <input onChange={changeName} defaultValue={personage?.nameHero}/></h2>
-            </div>
-            <div>
-                <button onClick={takeDamage}>Получить урон</button>
-            </div>
-            <div>
-                <ul className="baseSkills" >
-                    <label>Параметры</label>
-                    <li>Сила:
+        
+            <div className={styles.baseSkills} >
+                <ul >
+                    <h2>Параметры</h2>
+                    <li><h4>Сила:</h4>
                         <button onClick={() => changeHaract('Force',-1)}>-</button> 
                         {personage.force}
                         <button onClick={() => changeHaract('Force',+1)}>+</button> 
                     </li>
-                     <li>Ловкость:
+                     <li><h4>Ловкость:</h4>
                         <button onClick={() => changeHaract('Aility',-1)}>-</button> 
                         {personage.agility}
                         <button onClick={() => changeHaract('Aility',+1)}>+</button> 
                     </li>
-                     <li>Интелект:
+                     <li><h4>Интелект:</h4>
                         <button onClick={() => changeHaract('Intelligence',-1)}>-</button> 
                         {personage.intelligence}
                         <button onClick={() => changeHaract('Intelligence',+1)}>+</button> 
                     </li>
-                     <li>Харизма:
+                     <li><h4>Харизма:</h4>
                         <button onClick={() => changeHaract('Charisma',-1)}>-</button> 
                         {personage.charisma}
                         <button onClick={() => changeHaract('Charisma',+1)}>+</button> 
                     </li>
-                     <li>Жизненная сила:
-                        {personage.health}
+                     <li><h4>Жизненная сила:</h4>
+                        <p>{personage.health}</p>
                     </li>
-                     <li>Уклонение:
-                        {personage.evasion}
+                     <li><h4>Уклонение:</h4>
+                        <p>{personage.evasion}</p>
                     </li>
-                     <li>Энергичность:
-                        {personage.energy}
+                     <li><h4>Энергичность:</h4>
+                        <p>{personage.energy}</p>
                     </li>
                 </ul>
+            </div>
+            <div className={styles.extraSkills}>   
                 <ul onClick={trainSkill}>
-                    <label>Навыки</label>
-                    <li>Атака: {personage.getSkillValue('attack')} <button name="attack">Тренировать</button></li>
-                    <li>Стелс: {personage.getSkillValue('stealth')} <button name="stealth">Тренировать</button></li>
-                    <li>Стрельба из лука: {personage.getSkillValue('archery')} <button name="archery">Тренировать</button></li>
-                    <li>Обучаемость: {personage.getSkillValue('learnability')} <button name="learnability">Тренировать</button></li>
-                    <li>Выживание: {personage.getSkillValue('survival')} <button name="survival">Тренировать</button></li>
-                    <li>Медицина: {personage.getSkillValue('medicine')} <button name="medicine">Тренировать</button></li>
-                    <li>Запугивание: {personage.getSkillValue('intimidation')} <button name="intimidation">Тренировать</button></li>
-                    <li>Проницательность: {personage.getSkillValue('insight')} <button name="insight">Тренировать</button></li>
-                    <li>Внешний вид: {personage.getSkillValue('appearance')} <button name="appearance">Тренировать</button></li>
-                    <li>Манипулирование: {personage.getSkillValue('manipulation')} <button name="manipulation">Тренировать</button></li>
+                    <h2>Навыки</h2>
+                    <li><h4>Атака:</h4><span>{mapSkills[personage.getSkillValue('attack')]}</span><button name="attack">Тренировать</button></li>
+                    <li><h4>Стелс:</h4><span>{mapSkills[personage.getSkillValue('stealth')]}</span><button name="stealth">Тренировать</button></li>
+                    <li><h4>Стрельба из лука:</h4><span>{mapSkills[personage.getSkillValue('archery')]}</span><button name="archery">Тренировать</button></li>
+                    <li><h4>Обучаемость:</h4><span>{mapSkills[personage.getSkillValue('learnability')]}</span><button name="learnability">Тренировать</button></li>
+                    <li><h4>Выживание:</h4><span>{mapSkills[personage.getSkillValue('survival')]}</span><button name="survival">Тренировать</button></li>
+                    <li><h4>Медицина:</h4><span>{mapSkills[personage.getSkillValue('medicine')]}</span><button name="medicine">Тренировать</button></li>
+                    <li><h4>Запугивание:</h4><span>{mapSkills[personage.getSkillValue('intimidation')]}</span><button name="intimidation">Тренировать</button></li>
+                    <li><h4>Проницательность:</h4><span>{mapSkills[personage.getSkillValue('insight')]}</span><button name="insight">Тренировать</button></li>
+                    <li><h4>Внешний вид:</h4><span>{mapSkills[personage.getSkillValue('appearance')]}</span><button name="appearance">Тренировать</button></li>
+                    <li><h4>Манипулирование:</h4><span>{mapSkills[personage.getSkillValue('manipulation')]}</span><button name="manipulation">Тренировать</button></li>
                 </ul>
             </div>
         </>

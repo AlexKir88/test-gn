@@ -1,13 +1,13 @@
 import Hero from "../Hero/Hero";
-import { heroDefault } from "../../service/heroFunctions";
-import { saveDefaultPersonage, getSavedPersonage } from "../../service/actionIndexedDB";
+import Backup from "../Backup/Backup";
 import { useEffect, useState } from 'react';
+import { heroDefault } from '../../service/heroFunctions' ;
+import {getSavedPersonage, saveDefaultPersonage} from '../../service/actionIndexedDB';
+import styles from './Main.module.scss'
 
 
 const Main = () => {
     const [personage, setPersonage] = useState()
-    //ниже счетчик для запуска рендера, поскольку Реакт не видит изменений внутри екземпляра класса personage 
-    //и не рендерит при изменении его свойств.
     const [count, setCount ] = useState(0);
 
     useEffect( () => {
@@ -18,9 +18,10 @@ const Main = () => {
    
 
     return (
-        <>
+        <div className={styles.fullScreen}>
             {personage && <Hero personage={personage} setPersonage={setPersonage} count={count} setCount={setCount} />}
-        </>
+            <Backup personage={personage} setPersonage={setPersonage} count={count} setCount={setCount}/>
+        </div>
     )
 }
 

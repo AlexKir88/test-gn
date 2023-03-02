@@ -1,0 +1,45 @@
+*{
+    box-sizing: border-box;
+}
+
+.header {
+    width: 80vw;
+    border: 0.2vw solid grey;
+    padding: 3vh 2vw;
+    button{
+        margin: 0 1vw;
+    }
+}
+.baseSkills {
+    width: 40vw;
+    border: 0.2vw solid grey;
+    h4 {
+        display: inline-block;
+        width: 15vw;
+        margin: 0;
+    }
+    button {
+        margin: 0 0.5vw;
+    }
+    p {
+        display: inline-block;
+        margin: 0 2.3vw;
+    }
+}
+.extraSkills {
+    width: 40vw;
+    border: 0.2vw solid grey;
+    padding-right: 1vw;
+    h4 {
+        display: inline-block;
+        width: 15vw;
+        margin: 0;
+    }
+    span {
+        display: inline-block;
+        width: 10vw;
+    }
+    button {
+        margin: 0 1vw;
+    }
+}
