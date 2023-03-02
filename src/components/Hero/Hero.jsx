@@ -46,10 +46,10 @@ const Hero = ({personage, count, setCount}) => {
         <>  
             <div className={styles.header}>
                 <div>
-                    <h2>
+                    <h1>
                         Имя: <span ref={e => nameRef = e } onClick={callInput}>{personage?.nameHero} <BsPencilFill size={10} /> </span> 
                         <input defaultValue={personage?.nameHero} ref={e => inpRef = e} onBlur={changeName} onKeyDown={pressEnter} hidden  type='text'/>
-                    </h2>
+                    </h1>
                     <button onClick={takeDamage}>Получить урон</button>
                     <button onClick={killPersonage}>Обнулить персонажа</button>
                 </div>
@@ -59,33 +59,41 @@ const Hero = ({personage, count, setCount}) => {
                 <ul >
                     <h2>Параметры</h2>
                     <li><h4>Сила:</h4>
-                        <button onClick={() => changeHaract('Force',-1)}>-</button> 
-                        {personage.force}
-                        <button onClick={() => changeHaract('Force',+1)}>+</button> 
+                     <div className={styles.value}>
+                            <button onClick={() => changeHaract('Force',-1)}>-</button> 
+                            {personage.force}
+                            <button onClick={() => changeHaract('Force',+1)}>+</button> 
+                        </div>
                     </li>
                      <li><h4>Ловкость:</h4>
-                        <button onClick={() => changeHaract('Aility',-1)}>-</button> 
-                        {personage.agility}
-                        <button onClick={() => changeHaract('Aility',+1)}>+</button> 
+                        <div className={styles.value}>
+                            <button onClick={() => changeHaract('Aility',-1)}>-</button> 
+                            {personage.agility}
+                            <button onClick={() => changeHaract('Aility',+1)}>+</button> 
+                        </div>
                     </li>
                      <li><h4>Интелект:</h4>
-                        <button onClick={() => changeHaract('Intelligence',-1)}>-</button> 
-                        {personage.intelligence}
-                        <button onClick={() => changeHaract('Intelligence',+1)}>+</button> 
+                        <div className={styles.value}>
+                            <button onClick={() => changeHaract('Intelligence',-1)}>-</button> 
+                            {personage.intelligence}
+                            <button onClick={() => changeHaract('Intelligence',+1)}>+</button> 
+                        </div>
                     </li>
                      <li><h4>Харизма:</h4>
-                        <button onClick={() => changeHaract('Charisma',-1)}>-</button> 
-                        {personage.charisma}
-                        <button onClick={() => changeHaract('Charisma',+1)}>+</button> 
+                        <div className={styles.value}>
+                            <button onClick={() => changeHaract('Charisma',-1)}>-</button> 
+                            {personage.charisma}
+                            <button onClick={() => changeHaract('Charisma',+1)}>+</button> 
+                        </div>
                     </li>
                      <li><h4>Жизненная сила:</h4>
-                        <p>{personage.health}</p>
+                        <div className={styles.value}>{personage.health}</div>
                     </li>
                      <li><h4>Уклонение:</h4>
-                        <p>{personage.evasion}</p>
+                        <div className={styles.value}>{personage.evasion}</div>
                     </li>
                      <li><h4>Энергичность:</h4>
-                        <p>{personage.energy}</p>
+                        <div className={styles.value}>{personage.energy}</div>
                     </li>
                 </ul>
             </div>

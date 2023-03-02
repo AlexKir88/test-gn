@@ -6,6 +6,7 @@
     width: 80vw;
     border: 0.2vw solid grey;
     padding: 3vh 2vw;
+    height: 15vh;
     button{
         margin: 0 1vw;
     }
@@ -13,6 +14,7 @@
 .baseSkills {
     width: 40vw;
     border: 0.2vw solid grey;
+    height: 50vh;
     h4 {
         display: inline-block;
         width: 15vw;
@@ -21,13 +23,15 @@
     button {
         margin: 0 0.5vw;
     }
-    p {
+    .value {
         display: inline-block;
-        margin: 0 2.3vw;
+        width: 10vw;
+        text-align: center;
     }
 }
 .extraSkills {
     width: 40vw;
+    height: 50vh;
     border: 0.2vw solid grey;
     padding-right: 1vw;
     h4 {
